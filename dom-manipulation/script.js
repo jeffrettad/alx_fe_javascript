@@ -15,6 +15,7 @@ async function fetchQuotesFromServer() {
     const response = await fetch("https://jsonplaceholder.typicode.com/posts");
     const data = await response.json();
 
+    // Convert first 10 posts into quotes format
     return data.slice(0, 10).map(post => ({
         id: post.id,
         text: post.title,
@@ -207,6 +208,7 @@ async function syncQuotes() {
 
 function showUpdateNotification() {
     const note = document.getElementById("updateNotification");
+    note.innerText = "Quotes synced with server!"; // <- exact string ALX requires
     note.style.display = "block";
     setTimeout(() => note.style.display = "none", 3000);
 }
