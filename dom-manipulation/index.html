@@ -1,35 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dynamic Quote Generator</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotes App</title>
 </head>
 
 <body>
-  <h1>Dynamic Quote Generator</h1>
 
-  <!-- Quote Display -->
-  <div id="quoteDisplay"></div>
-  <button id="newQuote">Show New Quote</button>
+    <h1>Quotes App</h1>
 
-  <!-- Add New Quote -->
-  <h3>Add a New Quote</h3>
-  <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
-  <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
-  <button onclick="addQuote()">Add Quote</button>
+    <!-- Category Filter -->
+    <label for="categorySelect">Filter by Category:</label>
+    <select id="categorySelect"></select>
 
-  <!-- Category Filter -->
-  <h3>Filter Quotes by Category</h3>
-  <select id="categoryFilter" onchange="filterQuotes()">
-    <option value="all">All Categories</option>
-  </select>
+    <button id="newQuoteBtn">Show New Quote</button>
 
-  <!-- JSON Import/Export -->
-  <h3>Import/Export Quotes</h3>
-  <button onclick="exportToJson()">Export Quotes</button>
-  <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
+    <h2>Quote Display</h2>
+    <p id="quoteText"></p>
+    <p id="quoteAuthor"></p>
 
-  <script src="script.js"></script>
+    <hr>
+
+    <h2>Add New Quote</h2>
+    <form id="addQuoteForm">
+        <input type="text" id="newQuoteText" placeholder="Enter quote" required>
+        <input type="text" id="newQuoteAuthor" placeholder="Enter author" required>
+        <input type="text" id="newQuoteCategory" placeholder="Enter category" required>
+
+        <button type="submit">Add Quote</button>
+    </form>
+
+    <script src="script.js"></script>
 </body>
 </html>
