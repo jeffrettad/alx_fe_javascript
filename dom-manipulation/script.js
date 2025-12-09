@@ -8,27 +8,30 @@ let quotes = JSON.parse(localStorage.getItem("quotes")) || [
 ];
 
 /* ---------------------------------------------
-   Mock Server Simulation (ALX Task 3)
+   Fetch / Post Quotes using JSONPlaceholder
 --------------------------------------------- */
 
-let mockServerQuotes = [
-    { id: 1, text: "Believe in yourself.", category: "Motivation", updatedAt: 1 },
-    { id: 2, text: "Keep pushing forward.", category: "Inspiration", updatedAt: 1 }
-];
-
 async function fetchQuotesFromServer() {
-    return new Promise(resolve => {
-        setTimeout(() => resolve(mockServerQuotes), 500);
-    });
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+    const data = await response.json();
+
+    // Convert first 10 posts into quotes format
+    return data.slice(0, 10).map(post => ({
+        id: post.id,
+        text: post.title,
+        category: "Server",
+        updatedAt: Date.now()
+    }));
 }
 
 async function postQuoteToServer(newQuote) {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            mockServerQuotes.push(newQuote);
-            resolve(newQuote);
-        }, 300);
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newQuote)
     });
+
+    return await response.json();
 }
 
 /* ---------------------------------------------
@@ -90,13 +93,10 @@ async function addQuote() {
 function populateCategories() {
     const select = document.getElementById("categoryFilter");
 
-    // Clear current categories
     select.innerHTML = `<option value="all">All Categories</option>`;
 
-    // Extract unique categories
     const categories = [...new Set(quotes.map(q => q.category))];
 
-    // Add each category
     categories.forEach(cat => {
         const opt = document.createElement("option");
         opt.value = cat;
@@ -185,7 +185,6 @@ async function syncQuotes() {
     const serverQuotes = await fetchQuotesFromServer();
     let updated = false;
 
-    // Merge logic — server wins on conflict
     serverQuotes.forEach(serverQ => {
         const localQ = quotes.find(q => q.id === serverQ.id);
 
