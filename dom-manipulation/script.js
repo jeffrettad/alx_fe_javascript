@@ -15,7 +15,6 @@ async function fetchQuotesFromServer() {
     const response = await fetch("https://jsonplaceholder.typicode.com/posts");
     const data = await response.json();
 
-    // Convert first 10 posts into quotes format
     return data.slice(0, 10).map(post => ({
         id: post.id,
         text: post.title,
@@ -30,7 +29,6 @@ async function postQuoteToServer(newQuote) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newQuote)
     });
-
     return await response.json();
 }
 
@@ -104,7 +102,6 @@ function populateCategories() {
         select.appendChild(opt);
     });
 
-    // Restore selected category
     const savedFilter = localStorage.getItem("selectedCategory");
     if (savedFilter) select.value = savedFilter;
 }
@@ -204,13 +201,17 @@ async function syncQuotes() {
     }
 }
 
+/* ---------------------------------------------
+   Show Update Notification
+--------------------------------------------- */
+
 function showUpdateNotification() {
     const note = document.getElementById("updateNotification");
     note.style.display = "block";
     setTimeout(() => note.style.display = "none", 3000);
 }
 
-// Sync every 10 seconds
+// Periodic sync every 10 seconds
 setInterval(syncQuotes, 10000);
 
 /* ---------------------------------------------
