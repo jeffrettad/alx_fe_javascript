@@ -3,33 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quotes App</title>
+    <title>Dynamic Quote Generator</title>
+
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        #quoteDisplay { margin: 20px 0; font-size: 22px; font-weight: bold; }
+        #updateNotification {
+            background: #ffe08a;
+            padding: 10px;
+            margin-top: 15px;
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
+    <h1>Dynamic Quote Generator</h1>
 
-    <h1>Quotes App</h1>
+    <!-- Quote display -->
+    <div id="quoteDisplay"></div>
 
     <!-- Category Filter -->
-    <label for="categorySelect">Filter by Category:</label>
-    <select id="categorySelect"></select>
+    <label>Filter by Category:</label>
+    <select id="categoryFilter" onchange="filterQuotes()">
+        <option value="all">All Categories</option>
+    </select>
 
-    <button id="newQuoteBtn">Show New Quote</button>
+    <br><br>
 
-    <h2>Quote Display</h2>
-    <p id="quoteText"></p>
-    <p id="quoteAuthor"></p>
+    <button id="newQuote">Show New Quote</button>
 
-    <hr>
+    <h2>Add a New Quote</h2>
+    <input id="newQuoteText" type="text" placeholder="Enter a new quote">
+    <input id="newQuoteCategory" type="text" placeholder="Enter quote category">
+    <button onclick="addQuote()">Add Quote</button>
 
-    <h2>Add New Quote</h2>
-    <form id="addQuoteForm">
-        <input type="text" id="newQuoteText" placeholder="Enter quote" required>
-        <input type="text" id="newQuoteAuthor" placeholder="Enter author" required>
-        <input type="text" id="newQuoteCategory" placeholder="Enter category" required>
+    <h2>Import / Export JSON</h2>
+    <button onclick="exportToJson()">Export Quotes</button><br><br>
+    <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)">
 
-        <button type="submit">Add Quote</button>
-    </form>
+    <div id="updateNotification">Quotes updated from server!</div>
 
     <script src="script.js"></script>
 </body>
